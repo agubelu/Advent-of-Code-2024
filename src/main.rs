@@ -30,7 +30,7 @@ fn main() {
         let time = Instant::now();
         let (p1, p2) = func();
         let elapsed_ms = time.elapsed().as_nanos() as f64 / 1_000_000.0;
-        
+
         println!("\n=== Day {day:02} ===");
         println!("  · Part 1: {p1}");
         println!("  · Part 2: {p2}");
