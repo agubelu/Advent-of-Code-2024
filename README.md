@@ -32,4 +32,4 @@ To run: `cargo run --release [days...]`
 | Day 23 | |  |
 | Day 24 | |  |
 | Day 25 | |  |
-| **Total** | 2⭐ | 0.1390 ms |
+| **Total** | **2⭐** | **0.1390 ms** |

@@ -24,7 +24,7 @@ def process_line(line: str) -> str:
 
     if 'Total' in spl[1]:
         # Update totals line
-        return f'| **Total** | {total_stars}⭐ | {total_runtime:.4f} ms |'
+        return f'| **Total** | **{total_stars}⭐** | **{total_runtime:.4f} ms** |'
     elif '⭐' in spl[2]:
         # Day results, add link if missing and update totals
         total_stars += spl[2].count('⭐')
