@@ -37,7 +37,7 @@ def process_line(line: str) -> str:
 
 def make_link(day_str: str) -> str:
     day = int(day_str.split()[1])
-    return f'[{day_str}](https://adventofcode.com/2024/day/{day})'
+    return f'[{day_str}](/src/days/day{day:02}.rs)'
 
 if __name__ == '__main__':
     main()
