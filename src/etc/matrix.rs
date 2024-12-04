@@ -12,7 +12,7 @@ use super::coords::Coords2D;
 
 /** A 2D-like structure backed by a Vec */
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
-pub struct VecMat<T: Copy> {
+pub struct Matrix<T: Copy> {
     width: usize,
     height: usize,
     data: Vec<T>,
@@ -21,10 +21,10 @@ pub struct VecMat<T: Copy> {
 pub struct VecMaxIndexedIter<'a, T: Copy, I: PrimInt> {
     _typ: PhantomData<I>,
     iter: Enumerate<Iter<'a, T>>,
-    mat: &'a VecMat<T>
+    mat: &'a Matrix<T>
 }
 
-impl<T: Copy> VecMat<T> {
+impl<T: Copy> Matrix<T> {
     pub fn new(width: usize, height: usize, default: T) -> Self {
         let data = vec![default; width * height];
         Self { width, height, data }
@@ -59,7 +59,7 @@ impl<T: Copy> VecMat<T> {
         (0..self.height()).map(|i| self.data[i * self.width() + col]).collect()
     }
 
-    pub fn indexed_iter<I: PrimInt>(&self) -> VecMaxIndexedIter<T, I> {
+    pub fn enumerate<I: PrimInt>(&self) -> VecMaxIndexedIter<T, I> {
         VecMaxIndexedIter::new(self)
     }
 
@@ -112,7 +112,7 @@ impl<T: Copy> VecMat<T> {
     }
 }
 
-impl VecMat<char> {
+impl Matrix<char> {
     pub fn from_str(string: &str) -> Self {
         let width = string.lines().next().unwrap().len();
         let data: Vec<char> = string.chars().filter(|ch| !ch.is_whitespace()).collect();
@@ -120,7 +120,7 @@ impl VecMat<char> {
     }
 }
 
-impl<T, I> Index<(I, I)> for VecMat<T>
+impl<T, I> Index<(I, I)> for Matrix<T>
 where T: Copy,
       I: PrimInt + Display
 {
@@ -135,7 +135,7 @@ where T: Copy,
     }
 }
 
-impl<T, I> IndexMut<(I, I)> for VecMat<T>
+impl<T, I> IndexMut<(I, I)> for Matrix<T>
 where T: Copy,
       I: PrimInt + Display
 {
@@ -148,7 +148,7 @@ where T: Copy,
     }
 }
 
-impl<T, I> Index<Coords2D<I>> for VecMat<T>
+impl<T, I> Index<Coords2D<I>> for Matrix<T>
 where T: Copy,
       I: PrimInt + Display
 {
@@ -159,7 +159,7 @@ where T: Copy,
     }
 }
 
-impl<T, I> IndexMut<Coords2D<I>> for VecMat<T>
+impl<T, I> IndexMut<Coords2D<I>> for Matrix<T>
 where T: Copy,
       I: PrimInt + Display
 {
@@ -170,7 +170,7 @@ where T: Copy,
 }
 
 impl <'a, T: Copy, I: PrimInt> VecMaxIndexedIter<'a, T, I> {
-    pub fn new(mat: &'a VecMat<T>) -> Self {
+    pub fn new(mat: &'a Matrix<T>) -> Self {
         let iter = mat.data.iter().enumerate();
         Self { mat, iter, _typ: PhantomData }
     }
@@ -184,7 +184,7 @@ impl<'a, T: Copy, I: PrimInt> Iterator for VecMaxIndexedIter<'a, T, I> {
     }
 }
 
-impl<T: Copy + Display> Display for VecMat<T> {
+impl<T: Copy + Display> Display for Matrix<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for y in 0..self.height() {
             for x in 0..self.width() {
