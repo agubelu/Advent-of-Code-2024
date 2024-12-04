@@ -118,6 +118,10 @@ impl Matrix<char> {
         let data: Vec<char> = string.chars().filter(|ch| !ch.is_whitespace()).collect();
         Self{ width, height: data.len() / width, data }
     }
+
+    pub fn get_or_dot<I: PrimInt + Display>(&self, pos: Coords2D<I>) -> char {
+        self.get_or(pos, '.')
+    }
 }
 
 impl<T, I> Index<(I, I)> for Matrix<T>

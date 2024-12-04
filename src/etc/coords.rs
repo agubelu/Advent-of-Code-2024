@@ -19,46 +19,46 @@ impl<T: Num> Coords2D<T> {
 }
 
 impl<T: Num + Signed + Copy> Coords2D<T> {
-    pub fn up() -> Self {
+    pub fn unit_up() -> Self {
         (T::zero(), -T::one()).into()
     }
 
-    pub fn down() -> Self {
+    pub fn unit_down() -> Self {
         (T::zero(), T::one()).into()
     }
 
-    pub fn left() -> Self {
+    pub fn unit_left() -> Self {
         (-T::one(), T::zero()).into()
     }
 
-    pub fn right() -> Self {
+    pub fn unit_right() -> Self {
         (T::one(), T::zero()).into()
     }
 
-    pub fn go_up(&self) -> Self {
-        self + Self::up()
+    pub fn up(&self) -> Self {
+        self + Self::unit_up()
     }
 
-    pub fn go_down(&self) -> Self {
-        self + Self::down()
+    pub fn down(&self) -> Self {
+        self + Self::unit_down()
     }
 
-    pub fn go_left(&self) -> Self {
-        self + Self::left()
+    pub fn left(&self) -> Self {
+        self + Self::unit_left()
     }
 
-    pub fn go_right(&self) -> Self {
-        self + Self::right()
+    pub fn right(&self) -> Self {
+        self + Self::unit_right()
     }
 
     pub fn neighbors(&self) -> [Self; 4] {
-        [self + Self::up(), self + Self::down(), self + Self::left(), self + Self::right()]
+        [self + Self::unit_up(), self + Self::unit_down(), self + Self::unit_left(), self + Self::unit_right()]
     }
 
     pub fn neighbors_diag(&self) -> [Self; 8] {
-        [self + Self::up(), self + Self::down(), self + Self::left(), self + Self::right(),
-         self + Self::up() + Self::left(), self + Self::up() + Self::right(),
-         self + Self::down() + Self::left(), self + Self::down() + Self::right(),]
+        [self + Self::unit_up(), self + Self::unit_down(), self + Self::unit_left(), self + Self::unit_right(),
+         self + Self::unit_up() + Self::unit_left(), self + Self::unit_up() + Self::unit_right(),
+         self + Self::unit_down() + Self::unit_left(), self + Self::unit_down() + Self::unit_right(),]
     }
 }
 
@@ -144,6 +144,14 @@ impl <T: Num + Copy> Mul<T> for Coords2D<T> {
 
     fn mul(self, rhs: T) -> Self::Output {
         Self::new(self.x * rhs, self.y * rhs)
+    }
+}
+
+impl <T: Num + Copy> Mul<T> for &Coords2D<T> {
+    type Output = Coords2D<T>;
+
+    fn mul(self, rhs: T) -> Self::Output {
+        Coords2D::new(self.x * rhs, self.y * rhs)
     }
 }
 
