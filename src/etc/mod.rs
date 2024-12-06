@@ -5,4 +5,4 @@ pub mod coords;
 pub mod id_assigner;
 
 pub use matrix::Matrix;
-pub use coords::Coords2D;
+pub use coords::{Coords2D, Pos};

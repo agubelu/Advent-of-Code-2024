@@ -8,6 +8,8 @@ pub struct Coords2D<T: Num> {
     pub y: T,
 }
 
+pub type Pos = Coords2D<i32>;
+
 impl<T: Num> Coords2D<T> {
     pub const fn new(x: T, y: T) -> Self {
         Self { x, y }
@@ -59,6 +61,24 @@ impl<T: Num + Signed + Copy> Coords2D<T> {
         [self + Self::unit_up(), self + Self::unit_down(), self + Self::unit_left(), self + Self::unit_right(),
          self + Self::unit_up() + Self::unit_left(), self + Self::unit_up() + Self::unit_right(),
          self + Self::unit_down() + Self::unit_left(), self + Self::unit_down() + Self::unit_right(),]
+    }
+}
+
+impl Pos {
+    pub const fn const_up() -> Self {
+        Self::new(0, -1)
+    }
+
+    pub const fn const_down() -> Self {
+        Self::new(0, 1)
+    }
+
+    pub const fn const_left() -> Self {
+        Self::new(-1, 0)
+    }
+
+    pub const fn const_right() -> Self {
+        Self::new(1, 0)
     }
 }
 
