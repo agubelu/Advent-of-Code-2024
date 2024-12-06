@@ -21,7 +21,7 @@ pub fn solve() -> SolutionPair {
 }
 
 fn simulate_path(grid: &Matrix<char>) -> (usize, usize) {
-    let start = grid.enumerate().find(|x| x.1 == '^').unwrap().0;
+    let start = grid.find('^').unwrap();
     let result = navigate(grid, start, 0);
     let unique_positions = result.visited.into_iter().map(|x| x.0).unique().collect_vec();
 

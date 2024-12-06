@@ -12,19 +12,19 @@ use super::coords::Coords2D;
 
 /** A 2D-like structure backed by a Vec */
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
-pub struct Matrix<T: Copy> {
+pub struct Matrix<T: Copy + PartialEq + PartialEq> {
     width: usize,
     height: usize,
     data: Vec<T>,
 }
 
-pub struct VecMaxIndexedIter<'a, T: Copy, I: PrimInt> {
+pub struct VecMaxIndexedIter<'a, T: Copy + PartialEq + PartialEq, I: PrimInt> {
     _typ: PhantomData<I>,
     iter: Enumerate<Iter<'a, T>>,
     mat: &'a Matrix<T>
 }
 
-impl<T: Copy> Matrix<T> {
+impl<T: Copy + PartialEq + PartialEq> Matrix<T> {
     pub fn new(width: usize, height: usize, default: T) -> Self {
         let data = vec![default; width * height];
         Self { width, height, data }
@@ -110,6 +110,11 @@ impl<T: Copy> Matrix<T> {
     pub fn coords<I: PrimInt>(&self, index: usize) -> Coords2D<I> {
         (I::from(index % self.width).unwrap(), I::from(index / self.width).unwrap()).into()
     }
+
+    pub fn find<I: PrimInt>(&self, elem: T) -> Option<Coords2D<I>> {
+        // Find the first position of the provided element, if it exists.
+        self.enumerate().find(|&x| x.1 == elem).map(|x| x.0)
+    }
 }
 
 impl Matrix<char> {
@@ -125,7 +130,7 @@ impl Matrix<char> {
 }
 
 impl<T, I> Index<(I, I)> for Matrix<T>
-where T: Copy,
+where T: Copy + PartialEq + PartialEq,
       I: PrimInt + Display
 {
     type Output = T;
@@ -140,7 +145,7 @@ where T: Copy,
 }
 
 impl<T, I> IndexMut<(I, I)> for Matrix<T>
-where T: Copy,
+where T: Copy + PartialEq,
       I: PrimInt + Display
 {
     fn index_mut(&mut self, (x, y): (I, I)) -> &mut Self::Output {
@@ -153,7 +158,7 @@ where T: Copy,
 }
 
 impl<T, I> Index<Coords2D<I>> for Matrix<T>
-where T: Copy,
+where T: Copy + PartialEq,
       I: PrimInt + Display
 {
     type Output = T;
@@ -164,7 +169,7 @@ where T: Copy,
 }
 
 impl<T, I> IndexMut<Coords2D<I>> for Matrix<T>
-where T: Copy,
+where T: Copy + PartialEq,
       I: PrimInt + Display
 {
 
@@ -173,14 +178,14 @@ where T: Copy,
     }
 }
 
-impl <'a, T: Copy, I: PrimInt> VecMaxIndexedIter<'a, T, I> {
+impl <'a, T: Copy + PartialEq, I: PrimInt> VecMaxIndexedIter<'a, T, I> {
     pub fn new(mat: &'a Matrix<T>) -> Self {
         let iter = mat.data.iter().enumerate();
         Self { mat, iter, _typ: PhantomData }
     }
 }
 
-impl<'a, T: Copy, I: PrimInt> Iterator for VecMaxIndexedIter<'a, T, I> {
+impl<'a, T: Copy + PartialEq, I: PrimInt> Iterator for VecMaxIndexedIter<'a, T, I> {
     type Item = (Coords2D<I>, T);
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -188,7 +193,7 @@ impl<'a, T: Copy, I: PrimInt> Iterator for VecMaxIndexedIter<'a, T, I> {
     }
 }
 
-impl<T: Copy + Display> Display for Matrix<T> {
+impl<T: Copy + PartialEq + Display> Display for Matrix<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for y in 0..self.height() {
             for x in 0..self.width() {
