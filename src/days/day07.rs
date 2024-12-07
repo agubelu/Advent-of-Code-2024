@@ -1,13 +1,51 @@
-use crate::{Solution, SolutionPair};
 use std::fs::read_to_string;
+use itertools::Itertools;
+use rayon::prelude::*;
+
+use crate::{Solution, SolutionPair};
 
 ///////////////////////////////////////////////////////////////////////////////
 
-pub fn solve() -> SolutionPair {
-    let _input = read_to_string("input/day01.txt").unwrap();
+struct Equation {
+    target: u64,
+    values: Vec<u64>,
+}
 
-    let sol1 = 0u64;
-    let sol2 = 0u64;
+pub fn solve() -> SolutionPair {
+    let input = read_to_string("input/day07.txt").unwrap();
+    let equations = input.lines().map(parse_equation).collect_vec();
+
+    let sol1: u64 = equations.par_iter()
+        .filter(|eq| eq_solver(eq, eq.values[0], 1, false))
+        .map(|eq| eq.target).sum();
+
+    let sol2: u64 = equations.par_iter()
+        .filter(|eq| eq_solver(eq, eq.values[0], 1, true))
+        .map(|eq| eq.target).sum();
 
     (Solution::from(sol1), Solution::from(sol2))
+}
+
+fn eq_solver(eq: &Equation, acc: u64, i: usize, concat: bool) -> bool {
+    if acc > eq.target {
+        // NB: this depends on the accumulated value increasing monotonically.
+        // This does not happen if any value is zero, but it doesn't seem to be the case.
+        return false;
+    } else if i == eq.values.len() {
+        // All values processed, check whether the result is the target value
+        return acc == eq.target;
+    }
+    eq_solver(eq, acc + eq.values[i], i + 1, concat) ||
+    eq_solver(eq, acc * eq.values[i], i + 1, concat) ||
+    concat && eq_solver(eq, concat_numbers(acc, eq.values[i]), i + 1, concat)
+}
+
+fn parse_equation(line: &str) -> Equation {
+    let (l, r) = line.split_once(": ").unwrap();
+    let values = r.split(' ').map(|x| x.parse().unwrap()).collect();
+    Equation { target: l.parse().unwrap(), values }
+}
+
+fn concat_numbers(a: u64, b: u64) -> u64 {
+    a * 10_u64.pow(b.ilog10() + 1) + b
 }
