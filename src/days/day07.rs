@@ -15,15 +15,16 @@ pub fn solve() -> SolutionPair {
     let input = read_to_string("input/day07.txt").unwrap();
     let equations = input.lines().map(parse_equation).collect_vec();
 
-    let sol1: u64 = equations.par_iter()
-        .filter(|eq| eq_solver(eq, eq.values[0], 1, false))
-        .map(|eq| eq.target).sum();
-
-    let sol2: u64 = equations.par_iter()
-        .filter(|eq| eq_solver(eq, eq.values[0], 1, true))
-        .map(|eq| eq.target).sum();
+    let sol1 = calibration_results(&equations, false);
+    let sol2 = calibration_results(&equations, true);
 
     (Solution::from(sol1), Solution::from(sol2))
+}
+
+fn calibration_results(equations: &[Equation], with_concat: bool) -> u64 {
+    equations.par_iter()
+        .filter(|eq| eq_solver(eq, eq.values[0], 1, with_concat))
+        .map(|eq| eq.target).sum()
 }
 
 fn eq_solver(eq: &Equation, acc: u64, i: usize, concat: bool) -> bool {
