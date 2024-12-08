@@ -14,7 +14,7 @@ To run: `cargo run --release [days...]`
 | [Day 05](/src/days/day05.rs) | ⭐⭐ | 0.1749 ms |
 | [Day 06](/src/days/day06.rs) | ⭐⭐ | 26.2683 ms |
 | [Day 07](/src/days/day07.rs) | ⭐⭐ | 1.9123 ms |
-| Day 08 | |  |
+| [Day 08](/src/days/day08.rs) | ⭐⭐ | 0.0848 ms |
 | Day 09 | |  |
 | Day 10 | |  |
 | Day 11 | |  |
@@ -32,4 +32,4 @@ To run: `cargo run --release [days...]`
 | Day 23 | |  |
 | Day 24 | |  |
 | Day 25 | |  |
-| **Total** | **14⭐** | **29.6898 ms** |
+| **Total** | **16⭐** | **29.7746 ms** |
