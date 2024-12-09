@@ -91,9 +91,8 @@ fn move_block(layout: &mut Vec<Block>, source_ix: usize, target_ix: usize) {
         Less => {
             // The block is bigger than the space; a leftover remains in the block
             // This can only happen in part 1, so no extra space added because it doesn't matter.
-            let leftover_space = file_size - space_size;
             layout[target_ix] = Block { ident: layout[source_ix].ident, size: space_size };
-            layout[source_ix].size = leftover_space;
+            layout[source_ix].size = file_size - space_size;
         },
     };
 }
