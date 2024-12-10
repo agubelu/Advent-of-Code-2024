@@ -115,6 +115,11 @@ impl<T: Copy + PartialEq> Matrix<T> {
         // Find the first position of the provided element, if it exists.
         self.enumerate().find(|&x| x.1 == elem).map(|x| x.0)
     }
+
+    pub fn find_all<'a, I: PrimInt + 'a>(&'a self, elem: T) -> impl Iterator<Item = Coords2D<I>> + 'a {
+        self.enumerate().filter(move |&x| x.1 == elem).map(|x| x.0)
+    }
+
 }
 
 impl Matrix<char> {

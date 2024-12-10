@@ -10,11 +10,7 @@ pub fn solve() -> SolutionPair {
     let input = read_to_string("input/day10.txt").unwrap();
     let grid = Matrix::map_digits(&input);
 
-    let starts = grid.enumerate()
-        .filter(|(_, val)| *val == 0)
-        .map(|(pos, _)| pos);
-
-    let scores = starts.map(|p| trailhead_score(&grid, p));
+    let scores = grid.find_all(0).map(|p| trailhead_score(&grid, p));
     let (sol1, sol2) = scores.reduce(|prev, next| (prev.0 + next.0, prev.1 + next.1)).unwrap();
 
     (Solution::from(sol1), Solution::from(sol2))
