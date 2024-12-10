@@ -12,19 +12,19 @@ use super::coords::Coords2D;
 
 /** A 2D-like structure backed by a Vec */
 #[derive(Clone, Debug, Hash, PartialEq, Eq)]
-pub struct Matrix<T: Copy + PartialEq + PartialEq> {
+pub struct Matrix<T: Copy + PartialEq> {
     width: usize,
     height: usize,
     data: Vec<T>,
 }
 
-pub struct VecMaxIndexedIter<'a, T: Copy + PartialEq + PartialEq, I: PrimInt> {
+pub struct VecMaxIndexedIter<'a, T: Copy + PartialEq, I: PrimInt> {
     _typ: PhantomData<I>,
     iter: Enumerate<Iter<'a, T>>,
     mat: &'a Matrix<T>
 }
 
-impl<T: Copy + PartialEq + PartialEq> Matrix<T> {
+impl<T: Copy + PartialEq> Matrix<T> {
     pub fn new(width: usize, height: usize, default: T) -> Self {
         let data = vec![default; width * height];
         Self { width, height, data }
@@ -130,7 +130,7 @@ impl Matrix<char> {
 }
 
 impl<T, I> Index<(I, I)> for Matrix<T>
-where T: Copy + PartialEq + PartialEq,
+where T: Copy + PartialEq,
       I: PrimInt + Display
 {
     type Output = T;
