@@ -8,9 +8,9 @@ use crate::{Solution, SolutionPair};
 
 pub fn solve() -> SolutionPair {
     let input = read_to_string("input/day10.txt").unwrap();
-    let grid = Matrix::map_from_str(&input, |ch| ch.to_digit(10).unwrap() as u8);
+    let grid = Matrix::map_digits(&input);
 
-    let starts = grid.enumerate::<i32>()
+    let starts = grid.enumerate()
         .filter(|(_, val)| *val == 0)
         .map(|(pos, _)| pos);
 

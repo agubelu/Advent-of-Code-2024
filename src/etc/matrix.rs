@@ -6,7 +6,7 @@ use std::fmt::Display;
 use std::iter::Enumerate;
 use std::slice::Iter;
 
-use num_traits::int::PrimInt;
+use num_traits::{PrimInt, Unsigned};
 
 use super::coords::Coords2D;
 
@@ -126,6 +126,12 @@ impl Matrix<char> {
 
     pub fn get_or_dot<I: PrimInt + Display>(&self, pos: Coords2D<I>) -> char {
         self.get_or(pos, '.')
+    }
+}
+
+impl<T: PrimInt + Unsigned> Matrix<T> {
+    pub fn map_digits(string: &str) -> Self {
+        Self::map_from_str(string, |ch| T::from(ch.to_digit(10).unwrap()).unwrap())
     }
 }
 
