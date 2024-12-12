@@ -54,13 +54,12 @@ impl<T: Num + Signed + Copy> Coords2D<T> {
     }
 
     pub fn neighbors(&self) -> [Self; 4] {
-        [self + Self::unit_up(), self + Self::unit_down(), self + Self::unit_left(), self + Self::unit_right()]
+        [self.up(), self.down(), self.left(), self.right()]
     }
 
     pub fn neighbors_diag(&self) -> [Self; 8] {
-        [self + Self::unit_up(), self + Self::unit_down(), self + Self::unit_left(), self + Self::unit_right(),
-         self + Self::unit_up() + Self::unit_left(), self + Self::unit_up() + Self::unit_right(),
-         self + Self::unit_down() + Self::unit_left(), self + Self::unit_down() + Self::unit_right(),]
+        [self.up(), self.down(), self.left(), self.right(),
+         self.up().left(), self.up().right(), self.down().left(), self.down().right()]
     }
 }
 
