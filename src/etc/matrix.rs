@@ -63,6 +63,10 @@ impl<T: Copy + PartialEq> Matrix<T> {
         VecMaxIndexedIter::new(self)
     }
 
+    pub fn iter<'a>(&'a self) -> impl Iterator<Item = T> + 'a {
+        self.data.iter().copied()
+    }
+
     pub fn is_in_bounds<I: PrimInt>(&self, pos: Coords2D<I>) -> bool {
         let x = pos.x.to_i64().unwrap();
         let y = pos.y.to_i64().unwrap();
