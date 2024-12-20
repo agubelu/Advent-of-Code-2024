@@ -28,10 +28,10 @@ To run: `cargo run --release [days...]`
 | [Day 17](/src/days/day17.rs) | ⭐⭐ | 0.0208 ms |
 | [Day 18](/src/days/day18.rs) | ⭐⭐ | 1.1858 ms |
 | [Day 19](/src/days/day19.rs) | ⭐⭐ | 3.8523 ms |
-| Day 20 | |  |
+| [Day 20](/src/days/day20.rs) | ⭐⭐ | 4.9955 ms |
 | Day 21 | |  |
 | Day 22 | |  |
 | Day 23 | |  |
 | Day 24 | |  |
 | Day 25 | |  |
-| **Total** | **38⭐** | **88.2456 ms** |
+| **Total** | **40⭐** | **93.2411 ms** |
