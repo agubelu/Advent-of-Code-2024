@@ -33,5 +33,5 @@ To run: `cargo run --release [days...]`
 | [Day 22](/src/days/day22.rs) | ⭐⭐ | 33.5456 ms |
 | [Day 23](/src/days/day23.rs) | ⭐⭐ | 3.4190 ms |
 | [Day 24](/src/days/day24.rs) | ⭐⭐ | 0.0485 ms |
-| Day 25 | |  |
-| **Total** | **48⭐** | **130.4571 ms** |
+| [Day 25](/src/days/day25.rs) | ⭐⭐ | 0.3104 ms |
+| **Total** | **50⭐** | **130.7675 ms** |
